@@ -7,8 +7,12 @@ local isRendering = false
 local markerPanelShow = false
 local txd = CreateRuntimeTxd("markers-txd")
 
+local currentDim = 0
 local loadedTxd = {}
 
+RegisterNetEvent("rime-dimensions->Update" , function(newDim)
+   currentDim = newDim
+ end) 
 
 local function registerTXD(key, path)
      CreateRuntimeTextureFromImage(txd, key, path)
