@@ -67,7 +67,6 @@ end
 
 exports("AddMarker", AddMarker)
 
-
 ---@param id string Marker identifier
 function RemoveMarker(id)
      local invoker <const> = GetInvokingResource() or GetCurrentResourceName()
@@ -113,7 +112,7 @@ end))
 
 
 function ShouldShowMarker(factionID)
-     return true
+     return exports["mate-factions"]:CanUseFactionGarage(factionID)
 end
 
 local function render()
@@ -153,7 +152,10 @@ local function render()
                     )
 
                     if props.txdKey and props.txdVal then
-                         if not loadedTxd[props.txdVal] then return print(props.txdKey .. " - " .. props.txdVal .. " | Not loaded !") end
+                         if not loadedTxd[props.txdVal] then
+                              return print(props.txdKey ..
+                                   " - " .. props.txdVal .. " | Not loaded !")
+                         end
                          DrawMarker(
                               43,
                               props.pos + vector(0, 0, 0.85),
@@ -209,6 +211,7 @@ local function render()
 
      isRendering = false
 end
+
 exports("getCurrentMarker", (function()
      for id, props in pairs(streamed) do
           if props.inMarker then
